@@ -1,0 +1,960 @@
+<script data-type="text/worker">
+    // sheet open
+    on("sheet:opened", () => {
+        // inline's rolls
+        let payload = {
+			    "label_resistance_blood":getTranslationByKey("rt-resistance-blood-label"),
+			    "label_resistance_echo":getTranslationByKey("rt-resistance-echo-label"),
+			    "label_resistance_spirit":getTranslationByKey("rt-resistance-spirit-label"),
+			    "label_resistance_fortune":getTranslationByKey("rt-resistance-fortune-label"),
+			    "label_resistance_material":getTranslationByKey("rt-resistance-material-label"),
+        };
+
+        // init all variables
+        setAttrs(payload, {silent:true}, () => {
+			main_dices();
+        });
+    });
+
+    // ------------------------------------------
+    // number of Dices for inline's roll
+    // ------------------------------------------
+    on(
+		" change:skill_cross change:skill_convince change:skill_discern change:skill_endure change:skill_avoid change:skill_chase change:skill_repair change:skill_hide change:skill_kill" +
+		" change:field_cursed change:field_desolate change:field_haven change:field_occult change:field_religious change:field_technological change:field_cavernous change:field_wild" +
+    " change:main_skill change:main_field change:main_difficulty change:main_mastery"
+		, main_dices);
+    function main_dices() {
+        getAttrsNumber([
+			"skill_cross", "skill_convince", "skill_discern", "skill_endure", "skill_avoid", "skill_chase", "skill_repair", "skill_hide", "skill_kill" ,
+            "field_cursed", "field_desolate", "field_haven", "field_occult", "field_religious", "field_technological", "field_cavernous", "field_wild",
+            "main_difficulty", "main_mastery"
+        ], (user_number) => {
+			getAttrs([
+				"main_skill", "main_field"
+            ],(user_string) => {
+				let  dices = 0;
+
+				if (user_number.main_mastery == 1) 
+				{
+					dices = 4;
+				}
+				else
+				{
+					 let skill = 0, field = 0;
+					switch(user_string.main_skill)
+					{
+						case "cross": skill = user_number.skill_cross; break;
+						case "convince": skill = user_number.skill_convince; break;
+						case "discern": skill = user_number.skill_discern; break;
+						case "endure": skill = user_number.skill_endure; break;
+						case "avoid": skill = user_number.skill_avoid; break;
+						case "chase": skill = user_number.skill_chase; break;
+						case "repair": skill = user_number.skill_repair; break;
+						case "hide": skill = user_number.skill_hide; break;
+						case "kill": skill = user_number.skill_kill; break;
+					}
+
+					switch(user_string.main_field)
+					{
+						case "cursed": field = user_number.field_cursed; break;
+						case "desolate": field = user_number.field_desolate; break;
+						case "haven": field = user_number.field_haven; break;
+						case "occult": field = user_number.field_occult; break;
+						case "religious": field = user_number.field_religious; break;
+						case "technological": field = user_number.field_technological; break;
+						case "cavernous": field = user_number.field_cavernous; break;
+						case "wild": field = user_number.field_wild; break;
+					}
+
+					dices = 1 + skill + field;
+					if  ( dices > 4  ) dices = 4;
+				}
+				
+				dices -= user_number.main_difficulty;
+
+				// send payload
+        let payload = {
+			    "foo_main_dices" : dices,
+				  "foo_main_skill" : getTranslationByKey("skill-"+user_string.main_skill),
+				  "foo_main_field" : getTranslationByKey("field-"+user_string.main_field)
+				}
+				
+				delete(user_number);
+				delete(user_string);
+
+				setAttrs(payload);
+			  });
+      });
+    };
+
+    // ------------------------------------------
+    // function
+    // ------------------------------------------
+
+   // get all attribute name and their value as getAttrs()
+    // for numbers only ( values are cleaned, so a string return 0 )
+    //
+    // attr             (string or array of string) atributes to find
+    // callback         (function) returning function after xhr request
+    function getAttrsNumber(attr, callback) {
+        if ( !Array.isArray(attr) ) attr = [attr];
+        if ( !(callback instanceof Function) ) callback = () => {};
+
+        getAttrs(attr, (payload) => {
+            Object.keys(payload).forEach( key => { payload[key] = parseNumber(payload[key]) });
+            callback(payload);
+        });
+    }
+
+    // parse and clean numbers from roll20
+    // checkbox from roll20 return "on" for TRUE, 0 for FALSE
+    // some values from compendium return various string instead of an number ( "-", "&amp;Mdash;", ... )
+    //
+    // value            (number) number to parse
+    function parseNumber(value) {
+        if ( value === null || value === undefined ) return 0;
+        if ( value === "on" ) return 1;
+        if ( isNaN(value) ) value = 0;
+        return parseFloat(value);
+    }
+</script>
+
+<!-- DOM interactions -->
+<input type="hidden" class="toggle" name="attr_modal" value="closed" />
+<input type="hidden" name="attr_foo_main_skill" value="" />
+<input type="hidden" name="attr_foo_main_field" value="" />
+
+<!-- Header -->
+<div class="header">
+	<div class="header-name">
+		<input class="header-character" type="text" name="attr_character_name" value="@{character_name}" data-i18n-placeholder="character-name-placeholder" />
+		<input class="header-title" type="text" name="attr_character_title" />
+	</div>
+
+	<div class="flex-row">
+		<div class="flex-col"></div>
+
+		<div class="flex-col-auto">
+			<div class="option-modal modal">
+				<input class="modal-checkbox" data-i18n-title="option" type="checkbox" />
+				<span class="modal-label button cogwheel"></span>
+				<div class="modal-background"></div>
+				<div class="modal-dialog modal-small">
+					<div class="modal-header">
+						<span data-i18n="option"></span>
+					</div>
+
+					<div class="modal-body">
+						<h2 data-i18n="option-general"></h2>
+						<ul>
+							  <li>
+								<div class="button" data-i18n-title="option-whisper-title">
+									<div class="input-group">
+										<div class="input-group-text">
+											<span data-i18n="option-whisper-short"></span>
+										</div>
+										<select name="attr_option_whisper">
+											<option value=" " data-i18n="option-whisper-everyone" selected="selected"></option>
+											<option value="/w gm" data-i18n="option-whisper-gamemaster"></option>
+										</select>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+  </div>
+
+</div>
+
+<!-- Content -->
+<div class="main tab">
+  <span class="main-menu"></span>
+
+  <input class="tab-input" type="radio" name="attr_nav_tab" value="main" checked="checked">
+  <input class="tab-input" type="radio" name="attr_nav_tab" value="character">
+  <input class="tab-input" type="radio" name="attr_nav_tab" value="objective">
+  <input class="tab-input" type="radio" name="attr_nav_tab" value="note">
+
+  <span class="main-slider"></span>
+
+  <label class="tab-label">
+    <span data-i18n="nav-main"></span>
+  </label>
+  <div class="tab-content">
+    <div class="paper">
+      <div class="flex-row section">
+        <div class="flex-col6">
+	        <h1 data-i18n="defenses"></h1>
+	        <table>
+		        <thead>
+		        <tr>
+			        <td width="33%"></td>
+			        <td width="1%">
+				        <div class="fake-button-roll"></div>
+			        </td>
+			        <th width="33%">
+				        <span data-i18n="defense-resistances"></span>
+			        </th>								
+			        <th width="33%">
+				        <span data-i18n="defense-protections"></span>
+			        </th>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr>
+			        <td class="text-center">
+				        <span data-i18n="defense-blood"></span>
+			        </td>
+			        <td>
+				        <button
+						        name="roll_resistance_blood"
+						        type="roll"
+						        data-i18n-title="defense-roll-title"
+						        value="@{option_whisper} &{template:roll} {{roll_resistance=show}} {{name=@{character_name}}} {{label=@{label_resistance_blood}}} {{resistance=[[@{resistance_blood}]]}} {{resistance_raw=@{resistance_blood}}} {{test=[[1d12]]}}"
+				        ></button>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_resistance_blood">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+					        <option value="3">3</option>
+					        <option value="4">4</option>
+					        <option value="5">5</option>
+					        <option value="6">6</option>
+					        <option value="7">7</option>
+					        <option value="8">8</option>
+					        <option value="9">9</option>
+					        <option value="10">10</option>
+					        <option value="11">11</option>
+					        <option value="12">12</option>
+				        </select>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_protection_blood">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+					        <option value="3">3</option>
+					        <option value="4">4</option>
+					        <option value="5">5</option>
+					        <option value="6">6</option>
+					        <option value="7">7</option>
+					        <option value="8">8</option>
+					        <option value="9">9</option>
+					        <option value="10">10</option>
+					        <option value="11">11</option>
+					        <option value="12">12</option>
+				        </select>
+			        </td>
+	        </tr>
+		        <tr>
+			        <td class="text-center">
+				        <span data-i18n="defense-echo"></span>
+			        </td>
+			        <td>
+				        <button
+						        name="roll_resistance_echo"
+						        type="roll"
+						        data-i18n-title="defense-roll-title"
+						        value="@{option_whisper} &{template:roll} {{roll_resistance=show}} {{name=@{character_name}}} {{label=@{label_resistance_echo}}} {{resistance=[[@{resistance_echo}]]}} {{resistance_raw=@{resistance_echo}}} {{test=[[1d12]]}}"
+				        ></button>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_resistance_echo">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+					        <option value="3">3</option>
+					        <option value="4">4</option>
+					        <option value="5">5</option>
+					        <option value="6">6</option>
+					        <option value="7">7</option>
+					        <option value="8">8</option>
+					        <option value="9">9</option>
+					        <option value="10">10</option>
+					        <option value="11">11</option>
+					        <option value="12">12</option>
+				        </select>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_protection_echo">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+					        <option value="3">3</option>
+					        <option value="4">4</option>
+					        <option value="5">5</option>
+					        <option value="6">6</option>
+					        <option value="7">7</option>
+					        <option value="8">8</option>
+					        <option value="9">9</option>
+					        <option value="10">10</option>
+					        <option value="11">11</option>
+					        <option value="12">12</option>
+				        </select>
+			        </td>
+		        </tr>
+		        <tr>
+			        <td class="text-center">
+				        <span data-i18n="defense-spirit"></span>
+			        </td>
+			        <td>
+				        <button
+						        name="roll_resistance_spirit"
+						        type="roll"
+						        data-i18n-title="defense-roll-title"
+						        value="@{option_whisper} &{template:roll} {{roll_resistance=show}} {{name=@{character_name}}} {{label=@{label_resistance_spirit}}} {{resistance=[[@{resistance_spirit}]]}} {{resistance_raw=@{resistance_spirit}}}  {{test=[[1d12]]}}"
+				        ></button>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_resistance_spirit">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+					        <option value="3">3</option>
+					        <option value="4">4</option>
+					        <option value="5">5</option>
+					        <option value="6">6</option>
+					        <option value="7">7</option>
+					        <option value="8">8</option>
+					        <option value="9">9</option>
+					        <option value="10">10</option>
+					        <option value="11">11</option>
+					        <option value="12">12</option>
+				        </select>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_protection_spirit">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+					        <option value="3">3</option>
+					        <option value="4">4</option>
+					        <option value="5">5</option>
+					        <option value="6">6</option>
+					        <option value="7">7</option>
+					        <option value="8">8</option>
+					        <option value="9">9</option>
+					        <option value="10">10</option>
+					        <option value="11">11</option>
+					        <option value="12">12</option>
+				        </select>
+			        </th>
+		        </tr>
+		        <tr>
+			        <td class="text-center">
+				        <span data-i18n="defense-fortune"></span>
+			        </td>
+			        <td>
+				        <button
+						        name="roll_resistance_fortune"
+						        type="roll"
+						        data-i18n-title="defense-roll-title"
+						        value="@{option_whisper} &{template:roll} {{roll_resistance=show}} {{name=@{character_name}}} {{label=@{label_resistance_fortune}}} {{resistance=[[@{resistance_fortune}]]}} {{resistance_raw=@{resistance_fortune}}} {{test=[[1d12]]}}"
+				        ></button>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_resistance_fortune">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+					        <option value="3">3</option>
+					        <option value="4">4</option>
+					        <option value="5">5</option>
+					        <option value="6">6</option>
+					        <option value="7">7</option>
+					        <option value="8">8</option>
+					        <option value="9">9</option>
+					        <option value="10">10</option>
+					        <option value="11">11</option>
+					        <option value="12">12</option>
+				        </select>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_protection_fortune">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+					        <option value="3">3</option>
+					        <option value="4">4</option>
+					        <option value="5">5</option>
+					        <option value="6">6</option>
+					        <option value="7">7</option>
+					        <option value="8">8</option>
+					        <option value="9">9</option>
+					        <option value="10">10</option>
+					        <option value="11">11</option>
+					        <option value="12">12</option>
+				        </select>
+			        </td>
+		        </tr>
+		        <tr>
+			        <td class="text-center">
+				        <span data-i18n="defense-material"></span>
+			        </td>
+			        <td>
+				        <button
+						        name="roll_resistance_material"
+						        type="roll"
+						        data-i18n-title="defense-roll-title"
+						        value="@{option_whisper} &{template:roll} {{roll_resistance=show}} {{name=@{character_name}}} {{label=@{label_resistance_material}}}  {{resistance=[[@{resistance_material}]]}} {{resistance_raw=@{resistance_material}}} {{test=[[1d12]]}}"
+				        ></button>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_resistance_material">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+					        <option value="3">3</option>
+					        <option value="4">4</option>
+					        <option value="5">5</option>
+					        <option value="6">6</option>
+					        <option value="7">7</option>
+					        <option value="8">8</option>
+					        <option value="9">9</option>
+					        <option value="10">10</option>
+					        <option value="11">11</option>
+					        <option value="12">12</option>
+				        </select>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_protection_material">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+					        <option value="3">3</option>
+					        <option value="4">4</option>
+					        <option value="5">5</option>
+					        <option value="6">6</option>
+					        <option value="7">7</option>
+					        <option value="8">8</option>
+					        <option value="9">9</option>
+					        <option value="10">10</option>
+					        <option value="11">11</option>
+					        <option value="12">12</option>
+				        </select>
+			        </td>
+		        </tr>
+		        </tbody>
+	        </table>						
+        </div>
+
+        <div class="flex-col3">
+	        <h1 data-i18n="skills"></h1>
+	        <table>					
+		        <tbody>
+		        <tr>
+			        <td width="75%" class="text-center">
+				        <span data-i18n="skill-cross"></span>
+			        </td>
+			        <td width="25%">
+				        <select class="fixed-small" name="attr_skill_cross">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+				        </select>									
+			        </td>
+		        </tr>
+		        <tr>
+			        <td class="text-center">
+				        <span data-i18n="skill-convince"></span>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_skill_convince">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+				        </select>									
+			        </td>
+		        </tr>
+		        <tr>
+			        <td class="text-center">
+				        <span data-i18n="skill-discern"></span>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_skill_discern">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+				        </select>									
+			        </td>
+		        </tr>
+		        <tr>
+			        <td class="text-center">
+				        <span data-i18n="skill-endure"></span>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_skill_endure">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+				        </select>									
+			        </td>
+		        </tr>
+		        <tr>
+			        <td class="text-center">
+				        <span data-i18n="skill-avoid"></span>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_skill_avoid">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+				        </select>									
+			        </td>
+		        </tr>
+		        <tr>
+			        <td class="text-center">
+				        <span data-i18n="skill-chase"></span>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_skill_chase">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+				        </select>									
+			        </td>
+		        </tr>
+		        <tr>
+			        <td class="text-center">
+				        <span data-i18n="skill-repair"></span>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_skill_repair">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+				        </select>									
+			        </td>
+		        </tr>
+		        <tr>
+			        <td class="text-center">
+				        <span data-i18n="skill-hide"></span>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_skill_hide">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+				        </select>									
+			        </td>
+		        </tr>
+		        <tr>
+			        <td class="text-center">
+				        <span data-i18n="skill-kill"></span>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_skill_kill">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+				        </select>									
+			        </td>
+		        </tr>
+		        </tbody>
+	        </table>
+        </div>
+
+        <div class="flex-col3">
+	        <h1 data-i18n="fields"></h1>
+	        <table>
+		        <tbody>
+		        <tr>
+			        <td width="75%" class="text-center">
+				        <span data-i18n="field-cursed"></span>
+			        </td>
+			        <td width="25%">
+				        <select class="fixed-small" name="attr_field_cursed">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+				        </select>									
+			        </td>
+		        </tr>
+		        <tr>
+			        <td class="text-center">
+				        <span data-i18n="field-desolate"></span>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_field_desolate">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+				        </select>									
+			        </td>
+		        </tr>
+		        <tr>
+			        <td class="text-center">
+				        <span data-i18n="field-haven"></span>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_field_haven">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+				        </select>									
+			        </td>
+		        </tr>
+		        <tr>
+			        <td class="text-center">
+				        <span data-i18n="field-occult"></span>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_field_occult">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+				        </select>									
+			        </td>
+		        </tr>
+		        <tr>
+			        <td class="text-center">
+				        <span data-i18n="field-religious"></span>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_field_religious">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+				        </select>									
+			        </td>
+		        </tr>
+		        <tr>
+			        <td class="text-center">
+				        <span data-i18n="field-technological"></span>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_field_technological">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+				        </select>									
+			        </td>
+		        </tr>
+		        <tr>
+			        <td class="text-center">
+				        <span data-i18n="field-cavernous"></span>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_field_cavernous">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+				        </select>									
+			        </td>
+		        </tr>
+		        <tr>
+			        <td class="text-center">
+				        <span data-i18n="field-wild"></span>
+			        </td>
+			        <td>
+				        <select class="fixed-small" name="attr_field_wild">
+					        <option value="0" selected="selected">0</option>
+					        <option value="1">1</option>
+					        <option value="2">2</option>
+				        </select>									
+			        </td>
+		        </tr>
+		        </tbody>
+	        </table>
+        </div>
+      </div>
+
+			<h1 data-i18n="rolls"></h1>
+			<table class="section">
+				<thead>
+				<tr>
+					<td width="1%">
+						<div class="fake-button-roll"></div>
+					</td>
+					<th width="11%">
+					   <span data-i18n="main-dices" data-i18n-title="main-dices-title"></span>
+					</th>
+					<th width="26%">
+						<span data-i18n="main-skill"></span>
+					</th>
+					<th width="26%">
+						<span data-i18n="main-field"></span>
+					</th>
+					<th width="26%">
+						<span data-i18n="main-difficulty"></span>
+					</th>
+					<th width="11%">
+						<span data-i18n="main-mastery"></span>
+					</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td>
+						<button
+								name="roll_main"
+								type="roll"
+								data-i18n-title="main-roll-title"
+								value="@{option_whisper} &{template:roll} {{roll_main=show}} {{name=@{character_name}}}{{skill=@{foo_main_skill}}} {{field=@{foo_main_field}}} {{difficulty=[[@{main_difficulty}]]}} {{dices=[[@{foo_main_dices}]]}} {{test=[[@{foo_main_dices}d10kh1]]}} {{test_critic=[[1d10]]}}"></button>
+					</td>
+					<td>
+					  <input type="number" name="attr_main_dices" value="@{foo_main_dices}" disabled="disabled"/>
+					</td>
+					<td>
+						<select class="fixed-large" name="attr_main_skill">
+							<option value="cross" data-i18n="skill-cross" selected="selected"></option>
+							<option value="convince" data-i18n="skill-convince"></option>
+							<option value="discern" data-i18n="skill-discern"></option>
+							<option value="endure" data-i18n="skill-endure"></option>
+							<option value="avoid" data-i18n="skill-avoid"></option>
+							<option value="chase" data-i18n="skill-chase"></option>
+							<option value="repair"data-i18n="skill-repair"></option>
+							<option value="hide" data-i18n="skill-hide"></option>
+							<option value="kill" data-i18n="skill-kill"></option>
+						</select>	
+					</td>
+					<td>
+						<select class="fixed-large" name="attr_main_field">
+							<option value="cursed" data-i18n="field-cursed" selected="selected"></option>
+							<option value="desolate" data-i18n="field-desolate"></option>
+							<option value="haven" data-i18n="field-haven"></option>
+							<option value="occult" data-i18n="field-occult"></option>
+							<option value="religious" data-i18n="field-religious"></option>
+							<option value="technological" data-i18n="field-technological"></option>
+							<option value="cavernous" data-i18n="field-cavernous"></option>
+							<option value="wild" data-i18n="field-wild"></option>
+						</select>	
+					</td>
+					<td>
+						<select class="fixed-large" name="attr_main_difficulty">
+							<option value="0" data-i18n="main-difficulty-standard" selected="selected"></option>
+							<option value="1" data-i18n="main-difficulty-risky"></option>
+							<option value="2" data-i18n="main-difficulty-hard"></option>
+						</select>	
+					</td>
+					<td>
+						<select class="fixed-medium" name="attr_main_mastery">
+							<option value="0" data-i18n="no" selected="selected"></option>
+							<option value="1" data-i18n="yes"></option>
+						</select>	
+					</td>
+				</tr>
+				</tbody>
+			</table>
+
+			<table class="minor section">
+				<thead>
+				<tr>
+					<td width="1%">
+						<div class="fake-button-roll"></div>
+					</td>
+					<th width="100%">
+					   <span data-i18n="minor"></span>
+					</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td>
+						<button
+								name="roll_minor"
+								type="roll"
+								data-i18n-title="minor-roll-title"
+								value="@{option_whisper} &{template:roll} {{roll_minor=show}} {{name=@{character_name}}} {{test=[[@{minor_dice_count}d@{minor_dice_type}]]}}"></button>
+					</td>
+					<td>
+            <div class="input-group">
+						  <select class="fixed-small" name="attr_minor_dice_count">
+							  <option value="1" selected="selected">1</option>
+							  <option value="2">2</option>
+							  <option value="3">3</option>
+							  <option value="4">4</option>
+							  <option value="5">5</option>
+							  <option value="6">6</option>
+						  </select>	
+              <div class="input-group-text">
+                  <span data-i18n="dice-short"></span>
+              </div>					
+              <select class="fixed-small" name="attr_minor_dice_type" title="">
+                  <option value="4" selected="selected">4</option>
+                  <option value="6">6</option>
+                  <option value="8">8</option>
+                  <option value="10">10</option>
+                  <option value="12">12</option>
+              </select>
+            </div>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+
+			<h1 data-i18n="malus"></h1>
+			<textarea name="attr_malus" class="section" data-i18n-placeholder="malus-placeholder"></textarea>
+
+		</div>
+	</div>
+
+  <label class="tab-label">
+    <span data-i18n="nav-character"></span>
+  </label>
+  <div class="tab-content">
+    <div class="paper">
+      <h1 data-i18n="character"></h1>
+      <table class="character section">
+	      <thead>
+		      <tr>
+			      <th width="33.333333%">
+				      <span data-i18n="character-class"></span>
+			      </th>
+			      <th width="33.333333%">
+				      <span data-i18n="character-race"></span>
+			      </th>
+			      <th width="33.333333%">
+				      <span data-i18n="character-call"></span>
+			      </th>
+		      </tr>
+					</thead>
+					<tbody>
+		      <tr>
+		      <td>
+			      <input type="text" name="attr_character_class" value="" />
+		      </td>
+		      <td>
+			      <input type="text" name="attr_character_race" value="" />
+		      </td>
+		      <td>
+			      <input type="text" name="attr_character_call" value="" />
+		      </td>
+		      </tr>
+	      </tbody>
+      </table>
+
+      <h1 data-i18n="character-background"></h1>
+      <textarea name="attr_background" class="section" data-i18n-placeholder="character-background-placeholder"></textarea>
+
+      <h1 data-i18n="character-capacity"></h1>
+      <textarea name="attr_capacity" class="section" data-i18n-placeholder="character-capacity-placeholder"></textarea>
+
+      <h1 data-i18n="character-equipment"></h1>
+			<textarea name="attr_equipment" class="section large" data-i18n-placeholder="character-equipment-placeholder"></textarea>
+    </div>
+  </div>
+
+  <label class="tab-label">
+    <span data-i18n="nav-objective"></span>
+  </label>
+  <div class="tab-content">
+      <div class="paper">
+	      <h1 data-i18n="objective-active"></h1>
+	      <textarea name="attr_objective_active" class="section large" data-i18n-placeholder="objective-active-placeholder"></textarea>
+
+	      <h1 data-i18n="objective-inactive"></h1>
+	      <textarea name="attr_objective_inactive" class="section large" data-i18n-placeholder="objective-inactive-placeholder"></textarea>
+      </div>
+  </div>
+
+  <label class="tab-label">
+    <span data-i18n="nav-note"></span>
+  </label>
+  <div class="tab-content">
+          <div class="paper">
+	    <h1 data-i18n="note"></h1>
+	    <textarea name="attr_note" class="section large" data-i18n-placeholder="note-placeholder"></textarea>
+    </div>
+	</div>
+
+   </div>
+</div>
+
+<rolltemplate class="sheet-rolltemplate-roll">
+   {{#roll_main}}
+    <div class="roll-main">
+		{{#rollGreater() dices 1}}
+        <div class="header">
+            <p>
+                <b>{{name}}</b>
+            </p>
+        </div>
+        <div class="body">
+            <p>
+                <b><span data-i18n="rt-main-label"></span></b> : {{test}}<br />
+				{{skill}} , {{field}} 
+				{{#rollTotal() difficulty 1}}&nbsp;( <span data-i18n="main-difficulty-risky"></span> ){{/rollTotal() difficulty 1}}
+				{{#rollTotal() difficulty 2}}&nbsp;( <span data-i18n="main-difficulty-hard"></span> ){{/rollTotal() difficulty 2}}
+            </p>
+			<p>
+				{{#rollWasFumble() test}}<span class="text-danger" data-i18n="rt-main-fumble"></span>{{/rollWasFumble() test}}
+				{{#rollBetween() test 2 5}}<span class="text-warning" data-i18n="rt-main-failed"></span>{{/rollBetween() test 2 5}}
+				{{#rollBetween() test 6 7}}<span data-i18n="rt-main-success-low"></span>{{/rollBetween() test 6 7}}
+				{{#rollBetween() test 8 9}}<span data-i18n="rt-main-success"></span>{{/rollBetween() test 8 9}}
+				{{#rollWasCrit() test}}<span class="text-success" data-i18n="rt-main-critic"></span>{{/rollWasCrit() test}}
+			</p>
+        </div>
+        {{/rollGreater() dices 1}}
+
+        {{#^rollGreater() dices 1}}
+		<div class="critic">
+			<div class="header">
+				<p>
+					<b>{{name}}</b>
+				</p>
+			</div>
+			<div class="body">
+				<p>
+					 <b><span data-i18n="rt-main-label-critic"></span></b> : {{test_critic}}<br />
+					{{skill}} , {{field}} 
+					{{#rollTotal() difficulty 1}}&nbsp;( <span data-i18n="main-difficulty-risky"></span> ){{/rollTotal() difficulty 1}}
+					{{#rollTotal() difficulty 2}}&nbsp;( <span data-i18n="main-difficulty-hard"></span> ){{/rollTotal() difficulty 2}}
+				</p>
+				<p>
+					{{#rollWasFumble() test_critic}}<span class="text-danger" data-i18n="rt-main-fumble"></span>{{/rollWasFumble() test_critic}}
+					{{#rollBetween() test_critic 2 9}}<span class="text-warning" data-i18n="rt-main-failed"></span>{{/rollBetween() test_critic 2 9}}
+					{{#rollWasCrit() test_critic}}<span class="text-success" data-i18n="rt-main-success"></span>{{/rollWasCrit() test_critic}}
+				</p>
+			</div>
+        </div>
+		{{/^rollGreater() dices 1}}
+    </div>	
+    {{/roll_main}}
+
+    {{#roll_minor}}
+    <div class="roll-minor">
+        <div class="header">
+            <p>
+                <b>{{name}}</b>
+            </p>
+        </div>
+        <div class="body">
+            <p>
+                <b><span data-i18n="rt-minor-label"></span></b> : {{test}}
+            </p>
+        </div>
+    </div>
+    {{/roll_minor}}
+
+    {{#roll_resistance}}
+    <div class="roll-resistance">
+        <div class="header">
+            <p>
+                <b>{{name}}</b>
+            </p>
+        </div>
+        <div class="body">
+            <p>
+                <b>{{label}}</b> : {{test}}<br />
+                ( <span data-i18n="rt-resistance"></span> : {{resistance_raw}} )
+            </p>
+            <p>
+				{{#rollGreater() test resistance}}<span data-i18n="rt-resistance-malus-null"></span>{{/rollGreater() test resistance}}
+				{{#^rollGreater() test resistance}}
+				{{#rollLess() resistance 7}}<span class="text-warning" data-i18n="rt-resistance-malus-minor"></span>{{/rollLess() resistance 7}}
+				{{#^rollLess() resistance 7}}<span class="text-danger" data-i18n="rt-resistance-malus-major"></span>{{/^rollLess() resistance 7}}
+				{{/^rollGreater() test resistance}}
+            </p>
+        </div>
+    </div>
+    {{/roll_resistance}}
+</rolltemplate>

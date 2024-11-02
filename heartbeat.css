@@ -1,0 +1,1100 @@
+/* --------------------------------------------------- */
+/* roll20 fixed */
+/* --------------------------------------------------- */
+html, body {
+    font-size: 16px;
+    margin: 0;
+}
+
+.charsheet {
+    padding : 0 !important;
+    margin : 0;
+}
+
+.charsheet *, .charsheet *::after, .charsheet *::before {
+    box-sizing: border-box;
+}
+
+.charsheet * {
+    font-size: 15px;
+    line-height: 15px;
+}
+
+.charsheet *::before, .charsheet *::after {
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.charsheet table th, .charsheet table td {
+    padding: 0;
+}
+
+.charsheet button[type="roll"]:not(.sheet-button) {
+    padding: 0;
+    margin: 0;
+    text-shadow: none;
+    box-shadow: none;
+    border: none;
+    border-radius: unset;
+    background-color: transparent;
+    background-repeat: unset;
+}
+
+.charsheet input, .charsheet select, .charsheet textarea {
+    display: inline-block;
+    width: 100% !important;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+}
+
+.charsheet label {
+    margin: 0;
+    padding: 0;
+}
+
+.charsheet .repcontainer .repitem .itemcontrol {
+    z-index: 999;
+}
+
+.charsheet .repcontrol {
+    min-height: 26px;
+}
+
+.btn {
+    text-shadow: none;
+}
+
+/* --------------------------------------------------- */
+/* common */
+/* --------------------------------------------------- */
+.charsheet {
+    box-shadow: 0 0 9px rgb(20, 20, 20);
+    margin: 10px;
+}
+
+.charsheet * {
+    box-sizing: border-box;
+    font-family: "Gloria Hallelujah", "Patrick Hand", sans-serif;
+    color: rgb(56, 61, 65);
+}
+
+/* flex */
+.charsheet .sheet-flex-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    margin: 0 -8px;
+}
+
+.charsheet .sheet-flex-col,
+.charsheet .sheet-flex-col2,
+.charsheet .sheet-flex-col3,
+.charsheet .sheet-flex-col4,
+.charsheet .sheet-flex-col5,
+.charsheet .sheet-flex-col6,
+.charsheet .sheet-flex-col7,
+.charsheet .sheet-flex-col8,
+.charsheet .sheet-flex-col9,
+.charsheet .sheet-flex-col10,
+.charsheet .sheet-flex-col11 {
+    position: relative;
+    width: 100%;
+    flex-basis: 0;
+    flex-grow: 1;
+    padding: 0 8px;
+}
+.charsheet .sheet-flex-col   { max-width: 100%;}
+.charsheet .sheet-flex-col1  { max-width: 8.333333%;}
+.charsheet .sheet-flex-col2  { max-width: 16.666667%;}
+.charsheet .sheet-flex-col3  { max-width: 25%;}
+.charsheet .sheet-flex-col4  { max-width: 33.333333%;}
+.charsheet .sheet-flex-col5  { max-width: 41.666667%;}
+.charsheet .sheet-flex-col6  { max-width: 50%;}
+.charsheet .sheet-flex-col7  { max-width: 58.333333%;}
+.charsheet .sheet-flex-col8  { max-width: 66.666667%;}
+.charsheet .sheet-flex-col9  { max-width: 75%;}
+.charsheet .sheet-flex-col10 { max-width: 83.333333%;}
+.charsheet .sheet-flex-col11 { max-width: 91.666667%;}
+
+.charsheet .sheet-flex-col-auto {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+    padding: 0 8px;
+}
+
+/* "text-align-last:center; " chrome hack for 'text-align: center' */
+.charsheet .sheet-text-center {
+    text-align: center !important;
+    text-align-last: center !important;
+}
+
+.charsheet .sheet-text-bold {
+    font-weight: bold;
+}
+
+.charsheet .sheet-alert,
+.charsheet .sheet-cogwheel,
+.charsheet .sheet-house,
+.charsheet .sheet-info-sign,
+.charsheet .sheet-link,
+.charsheet .sheet-pen,
+.charsheet .sheet-tools {
+    font-family: "Pictos", sans-serif;
+    padding: 0 !important;
+}
+
+.charsheet .sheet-alert::after,
+.charsheet .sheet-cogwheel::after,
+.charsheet .sheet-house::after,
+.charsheet .sheet-info-sign::after,
+.charsheet .sheet-link::after,
+.charsheet .sheet-pen::after,
+.charsheet .sheet-tools::after {
+}
+
+.charsheet .sheet-alert::after {
+    color: rgb(220, 53, 69);
+}
+
+.charsheet .sheet-alert::after {
+    content : "!";
+}
+
+.charsheet .sheet-cogwheel::after {
+    content : "y";
+}
+
+.charsheet .sheet-info-sign::after {
+    content : "i";
+}
+
+.charsheet .sheet-house::after {
+    content : "H";
+}
+
+.charsheet .sheet-link::after {
+    content : "j";
+}
+
+.charsheet .sheet-pen::after {
+    content : "p";
+}
+
+.charsheet .sheet-tools::after {
+    content : "x";
+}
+
+.charsheet small {
+    color: rgb(108, 117, 125);
+    font-size: 80%;
+}
+
+.charsheet .sheet-fixed-small {
+    max-width: 45px !important;
+}
+
+.charsheet .sheet-fixed-medium {
+    max-width: 105px !important;
+}
+
+.charsheet .sheet-fixed-large {
+    max-width: 180px !important;
+}
+
+.charsheet input,
+.charsheet select {
+    background-color: transparent;
+    width: auto;
+    text-align: center;
+    border: none;
+    margin: 0;
+    line-height: 26px;
+}
+
+.charsheet select {
+    height: 27px;
+    padding-right: 10px;
+}
+
+.charsheet input[type="number"]:-moz-read-only, .charsheet input[type="text"]:-moz-read-only,
+.charsheet input[type="number"][read-only], .charsheet input[type="text"][read-only] {
+    cursor: default;
+}
+
+/* "text-align-last:center; " chrome hack for 'text-align: center' */
+.charsheet select {
+    text-align-last:center;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.charsheet select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
+}
+
+.charsheet input[type="number"] {
+    -moz-appearance: textfield;
+    -webkit-appearance: textfield;
+    appearance: textfield;
+}
+
+/* chrome hack for "appearance: textfield' on 'input[type="number"]' */
+.charsheet input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.charsheet input:focus,
+.charsheet select:focus,
+.charsheet textarea:focus,
+.charsheet button:focus {
+    outline: none;
+}
+
+.charsheet .sheet-text-left {
+    text-align: left !important;
+}
+
+.charsheet .sheet-text-right {
+    text-align: right !important;
+}
+
+.charsheet hr {
+    width: 60%;
+    border: 0;
+    height: 2px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0));
+    margin: 0 20% 20px;
+}
+
+.charsheet button[type="roll"]:not(.sheet-button), .sheet-fake-button-roll {
+    width: 30px;
+}
+
+.charsheet button[type="roll"]:not(.sheet-button) {
+    height: 30px;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: transparent url("https://raw.githubusercontent.com/aloade/heartbeat/image/dice.png") no-repeat;
+    background-size: 30px 30px;
+    cursor: pointer;
+}
+
+.charsheet button[type="roll"]:not(.sheet-button)[type="roll"]:before {
+    content: "";
+}
+
+.sheet-button,
+.sheet-button-fake {
+    display: block;
+    min-width: 30px;
+    border: none;
+}
+
+.charsheet .sheet-button::before {
+    content: "" !important;
+    display: block;
+    border-radius: 3px;
+    box-shadow: rgb(98, 114, 126) 0 2px 5px;
+    height: 100%;
+    padding: 2px 0 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.charsheet .sheet-button,
+.charsheet .sheet-button-switch {
+    position: relative;
+    height: 26px;
+    line-height: 22px;
+    font-size: 15px !important; /* roll20 hack */
+    margin: 0 !important; /* roll20 hack */
+    padding: 0 12px !important; /* roll20 hack */
+    text-align: center;
+    color: rgb(246, 226, 195);
+    background-color: rgb(75, 38, 22);
+    border-image-source: url("https://raw.githubusercontent.com/aloade/roll20-character-sheets/master/Pathfinder%20Adventurer%27s/image/button.jpg");
+    border-image-slice: 49 fill;
+    border-image-width: 15px;
+    border-image-repeat: round;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+    transition: color 0.35s ease;
+}
+
+.sheet-button:hover,
+.sheet-button:hover select,
+.sheet-button-switch:hover {
+    color: rgb(255, 255, 255);
+}
+
+.sheet-button:active,
+.sheet-button-switch:active {
+    box-shadow: inset 0 9px 15px 0 #c4c4c4;
+    top: 2px;
+}
+
+.sheet-button-small {
+    width: 26px;
+    padding: 0 !important;
+}
+
+.sheet-button span {
+    color: inherit;
+}
+
+.sheet-button .sheet-input-group-text span {
+    color: rgb(150, 150, 150);
+    line-height: 22px;
+}
+
+.charsheet .sheet-button .sheet-input-group select {
+    width: 100%;
+    color: rgb(246, 226, 195);
+    line-height: 23px;
+    height: 23px;
+    transition: color 0.35s ease;
+    text-align-last: center;
+    padding-right: 8px;
+    border: none !important;
+}
+
+.sheet-button-switch {
+}
+
+.sheet-button-switch input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 0;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.charsheet .sheet-button-switch-face {
+    position: absolute;
+    top: 50%;
+    left: 15px;
+    width: 15px;
+    height: 15px;
+    font-size: 11px;
+    font-weight: bold;
+    text-align: center;
+    z-index: 1;
+    transition: opacity 0.25s ease;
+    border-radius: 50%;
+    color: inherit;
+    border: none;
+    transform: translate(-50%, -50%);
+}
+
+.charsheet .sheet-button-switch input:checked ~ .sheet-button-switch-face {
+    background-color: rgb(255, 0, 0);
+    box-shadow: inset 0 0 4px rgb(0, 0, 0), 0 0 15px rgba(255, 0, 0, 0.75);
+}
+
+.charsheet .sheet-button-switch input:not(:checked) ~ .sheet-button-switch-face {
+    background-color: rgb(90, 0, 0);
+    box-shadow: inset 0 0 4px rgb(0, 0, 0), 0 0 15px rgba(90, 0, 0, 0.75);
+}
+
+.charsheet .sheet-button-switch-label {
+    padding-left: 15px;
+    color: inherit;
+    line-height: 22px;
+}
+
+/* tab */
+.charsheet .sheet-tab {
+    position: relative;
+}
+
+.charsheet .sheet-tab-input, .charsheet .sheet-tab-label {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.charsheet .sheet-tab-input {
+    opacity: 0;
+    margin: 0;
+    z-index: 2;
+    cursor: pointer;
+}
+
+.charsheet .sheet-tab-input:checked:nth-of-type(1) ~ .sheet-tab-label:nth-of-type(1),
+.charsheet .sheet-tab-input:checked:nth-of-type(2) ~ .sheet-tab-label:nth-of-type(2),
+.charsheet .sheet-tab-input:checked:nth-of-type(3) ~ .sheet-tab-label:nth-of-type(3),
+.charsheet .sheet-tab-input:checked:nth-of-type(4) ~ .sheet-tab-label:nth-of-type(4),
+.charsheet .sheet-tab-input:checked:nth-of-type(5) ~ .sheet-tab-label:nth-of-type(5),
+.charsheet .sheet-tab-input:checked:nth-of-type(6) ~ .sheet-tab-label:nth-of-type(6),
+.charsheet .sheet-tab-input:checked:nth-of-type(7) ~ .sheet-tab-label:nth-of-type(7),
+.charsheet .sheet-tab-input:checked:nth-of-type(8) ~ .sheet-tab-label:nth-of-type(8),
+.charsheet .sheet-tab-input:checked:nth-of-type(9) ~ .sheet-tab-label:nth-of-type(9),
+.charsheet .sheet-tab-input:checked:nth-of-type(10) ~ .sheet-tab-label:nth-of-type(10),
+.charsheet .sheet-tab-input:checked:nth-of-type(11) ~ .sheet-tab-label:nth-of-type(11) {
+    z-index: 4;
+}
+
+.charsheet .sheet-tab-content {
+    display: none;
+}
+
+.charsheet .sheet-tab-input:checked:nth-of-type(1) ~ .sheet-tab-content:nth-of-type(1),
+.charsheet .sheet-tab-input:checked:nth-of-type(2) ~ .sheet-tab-content:nth-of-type(2),
+.charsheet .sheet-tab-input:checked:nth-of-type(3) ~ .sheet-tab-content:nth-of-type(3),
+.charsheet .sheet-tab-input:checked:nth-of-type(4) ~ .sheet-tab-content:nth-of-type(4),
+.charsheet .sheet-tab-input:checked:nth-of-type(5) ~ .sheet-tab-content:nth-of-type(5),
+.charsheet .sheet-tab-input:checked:nth-of-type(6) ~ .sheet-tab-content:nth-of-type(6),
+.charsheet .sheet-tab-input:checked:nth-of-type(7) ~ .sheet-tab-content:nth-of-type(7),
+.charsheet .sheet-tab-input:checked:nth-of-type(8) ~ .sheet-tab-content:nth-of-type(8),
+.charsheet .sheet-tab-input:checked:nth-of-type(9) ~ .sheet-tab-content:nth-of-type(9),
+.charsheet .sheet-tab-input:checked:nth-of-type(10) ~ .sheet-tab-content:nth-of-type(10),
+.charsheet .sheet-tab-input:checked:nth-of-type(11) ~ .sheet-tab-content:nth-of-type(11) {
+    display: block;
+}
+
+/* input group */
+.charsheet .sheet-input-group {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    width: 100%;
+}
+
+.charsheet .sheet-input-group > * + * {
+    margin-left: 8px;
+}
+
+.charsheet .sheet-input-group input,
+.charsheet .sheet-input-group select {
+    flex: 1 1 auto;
+    width: 1% !important;
+}
+
+.charsheet .sheet-input-group-auto {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: 100%;
+}
+
+
+.charsheet .sheet-input-group-text span {
+    line-height: 26px;
+}
+
+.charsheet .sheet-input-group-text * {
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* --------------------------------------------------- */
+/* modal */
+/* --------------------------------------------------- */
+.charsheet .sheet-modal {
+    position: relative;
+}
+
+.charsheet .sheet-modal-checkbox {
+    position: fixed;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 0;
+    z-index: 11;
+    cursor: pointer;
+}
+
+.sheet-modal-label::after {
+    line-height: 26px;
+}
+
+.charsheet .sheet-modal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.25s ease;
+}
+
+.charsheet .sheet-modal-dialog {
+    position: fixed;
+    top: 5%;
+    left: 50%;
+    max-height: 90%;
+    padding: 30px;
+    background-color: rgb(77, 57, 42);
+    border-image-source: url("https://raw.githubusercontent.com/aloade/roll20-character-sheets/master/Pathfinder%20Adventurer%27s/image/modal.jpg");
+    border-image-slice: 60 fill;
+    border-image-width: 30px;
+    border-image-repeat: stretch;
+    width: calc(100% - 20px);
+    box-shadow: 0 0 9px rgb(20, 20, 20);
+    visibility: visible;
+    opacity: 1;
+    z-index: 12;
+    transform: translate(-50%, 0%);
+    transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
+    overflow-y: auto;
+}
+
+.sheet-modal-checkbox:not(:checked) {
+    position: absolute;
+    z-index: 2;
+}
+
+.charsheet .sheet-modal-checkbox:not(:checked) ~ .sheet-modal-background {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.charsheet .sheet-modal-checkbox:not(:checked) ~ .sheet-modal-dialog {
+    transform: translate(-50%, 10%);
+    visibility: hidden;
+    opacity: 0;
+}
+
+.charsheet .sheet-modal-small {
+    max-width: 460px;
+}
+
+.charsheet .sheet-modal-medium {
+    max-width: 680px;
+}
+
+.charsheet .sheet-modal-large {
+    max-width: 880px;
+}
+
+.charsheet .sheet-modal-header {
+    padding-bottom: 10px;
+}
+
+.charsheet .sheet-modal-header span {
+    display: block;
+    text-align: center;
+    color: rgb(200, 200, 200);
+    font-size: 150%;
+    line-height: 14px;
+    font-weight: bold;
+}
+
+.charsheet .sheet-modal-header:after {
+    content: "";
+    display: block;
+    width: 60%;
+    border: 0;
+    height: 2px;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0));
+    margin: 5px 20% 0;
+}
+
+.charsheet .sheet-modal-body {
+}
+
+.charsheet .sheet-modal-footer {
+    padding-top: 30px;
+}
+
+.charsheet .sheet-modal-dialog h2 {
+    text-align: center;
+    color: rgb(200, 200, 200);
+    font-size: 100%;
+    line-height: 26px;
+    height: 26px;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.charsheet .sheet-modal-dialog ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0 -5px -10px;
+}
+
+.charsheet .sheet-modal-dialog li {
+    list-style: none;
+    width: 100%;
+    margin: 0 5px 10px;
+    max-width : 200px;
+}
+
+.charsheet .sheet-modal-dialog .sheet-input-group {
+    height: 26px;
+}
+
+.charsheet .sheet-modal-dialog input,
+.charsheet .sheet-modal-dialog select {
+    color: rgb(200, 200, 200);
+}
+
+/* "text-align-last:center; " chrome hack for 'text-align: center' */
+.charsheet .sheet-modal-dialog input:not([readonly]),
+.charsheet .sheet-modal-dialog select {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+}
+
+.charsheet .sheet-modal-dialog .sheet-input-group input:not([readonly]),
+.charsheet .sheet-modal-dialog .sheet-input-group select {
+    text-align: right;
+    text-align-last: right;
+    padding-right: 20px;
+}
+
+.charsheet .sheet-modal select {
+    background: url("https://raw.githubusercontent.com/aloade/roll20-character-sheets/master/Pathfinder%20Adventurer%27s/image/select_dropdown_light.png") no-repeat center right;
+}
+
+/* --------------------------------------------------- */
+/* header */
+/* --------------------------------------------------- */
+.charsheet .sheet-header {
+    position: relative;
+    padding: 20px 30px;
+    background-color: rgb(42, 31, 26);
+    border-image-source: url("https://raw.githubusercontent.com/aloade/roll20-character-sheets/master/Pathfinder%20Adventurer%27s/image/header_frame.jpg");
+    border-image-slice: 100 130 fill;
+    border-image-width: 60px;
+    border-image-repeat: stretch;
+}
+
+.charsheet .sheet-header-character,
+.charsheet .sheet-header-title {
+    color: rgb(200, 200, 200);
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.charsheet .sheet-header input {
+    width: 100%;
+}
+
+.charsheet .sheet-header span[title] {
+    text-decoration: underline dashed rgb(150, 150, 150);
+    cursor: help;
+}
+
+.charsheet .sheet-header-character {
+    font-size: 28px;
+    line-height: 40px;
+    font-family: "Julee", "Patrick Hand", sans-serif;
+}
+
+.charsheet .sheet-header-title {
+    height: 30px;
+    line-height: 30px;
+}
+
+.charsheet .sheet-header-name {
+    margin-bottom: 15px;
+}
+
+/* --------------------------------------------------- */
+/* option */
+/* --------------------------------------------------- */
+.charsheet .sheet-option-modal  {
+}
+
+.charsheet .sheet-option-modal:hover .sheet-button {
+    color: rgb(255, 255, 255);
+}
+
+/* --------------------------------------------------- */
+/* content */
+/* --------------------------------------------------- */
+.charsheet section {
+    margin-bottom: 30px;
+}
+
+/* tab */
+.charsheet .sheet-main-menu {
+    display: block;
+    height: 32px;
+    background-color: rgb(50, 36, 37);
+    border: 2px solid rgb(50, 50, 50);
+    border-image-source: url("https://raw.githubusercontent.com/aloade/roll20-character-sheets/master/Pathfinder%20Adventurer%27s/image/menu_background.jpg");
+    border-image-slice: 38 fill;
+    border-image-width: 36px;
+    border-image-repeat: round;
+}
+
+/*
+  width =  round(100 / "count of tabs") */
+.charsheet .sheet-main-slider {
+    display: block;
+    position: absolute;
+    top: 0;
+    min-width: 90px;
+    width: 25%;
+    max-width: 180px;
+    height: 32px;
+    background-image: url("https://raw.githubusercontent.com/aloade/roll20-character-sheets/master/Pathfinder%20Adventurer%27s/image/menu_slider.png");
+    background-repeat:no-repeat;
+    background-size: 100% 100%;
+    color: rgb(255, 255, 255);
+    z-index: 3;
+    transform: translateX(-50%);
+    transition: left 0.25s ease-out;
+    left: 0%;
+}
+
+/*
+   count = "count of tabs"
+   x = [0; count[
+   left = x  * ( 100 / count ) + 100 / (count x 2 )  */
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(1) ~ .sheet-main-slider { left: 12.5%; }
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(2) ~ .sheet-main-slider { left: 37.5%; }
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(3) ~ .sheet-main-slider { left: 62.5%; }
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(4) ~ .sheet-main-slider { left: 87.5%; }
+
+/*
+  width =  round(100 / "count of tabs") */
+.charsheet .sheet-main > .sheet-tab-input,
+.charsheet .sheet-main > .sheet-tab-label {
+    width: 25% !important;
+    height: 32px;
+}
+
+/*
+   count = "count of tabs"
+   x = [0; count[
+   left = x  * ( 100 / count ) */
+.charsheet .sheet-main > .sheet-tab-input:nth-of-type(1) { left: 0%; }
+.charsheet .sheet-main > .sheet-tab-input:nth-of-type(2) { left: 25%; }
+.charsheet .sheet-main > .sheet-tab-input:nth-of-type(3) { left: 50%; }
+.charsheet .sheet-main > .sheet-tab-input:nth-of-type(4) { left: 75%; }
+
+.charsheet .sheet-main > .sheet-tab-label {
+    min-width: 94px;
+    max-width: 188px;
+    text-align: center;
+    color: rgb(159, 128, 73);
+    font-size: 90%;
+    line-height: 30px;
+    transform: translateX(-50%);
+    z-index: 1;
+    font-weight: bold;
+    transition: color 0.35s ease;
+}
+
+/*
+   count = "count of tabs"
+   x = [0; count[
+   left = x  * ( 100 / count ) + 100 / (count x 2 )  */
+.charsheet .sheet-main > .sheet-tab-label:nth-of-type(1) { left: 12.5%; }
+.charsheet .sheet-main > .sheet-tab-label:nth-of-type(2) { left: 37.5%; }
+.charsheet .sheet-main > .sheet-tab-label:nth-of-type(3) { left: 62.5%; }
+.charsheet .sheet-main > .sheet-tab-label:nth-of-type(4) { left: 87.5%; }
+
+.charsheet .sheet-main > .sheet-tab-input:hover:nth-of-type(1) ~ .sheet-tab-label:nth-of-type(1),
+.charsheet .sheet-main > .sheet-tab-input:hover:nth-of-type(2) ~ .sheet-tab-label:nth-of-type(2),
+.charsheet .sheet-main > .sheet-tab-input:hover:nth-of-type(3) ~ .sheet-tab-label:nth-of-type(3),
+.charsheet .sheet-main > .sheet-tab-input:hover:nth-of-type(4) ~ .sheet-tab-label:nth-of-type(4),
+.charsheet .sheet-main > .sheet-tab-input:hover:nth-of-type(5) ~ .sheet-tab-label:nth-of-type(5),
+.charsheet .sheet-main > .sheet-tab-input:hover:nth-of-type(6) ~ .sheet-tab-label:nth-of-type(6),
+.charsheet .sheet-main > .sheet-tab-input:hover:nth-of-type(7) ~ .sheet-tab-label:nth-of-type(7),
+.charsheet .sheet-main > .sheet-tab-input:hover:nth-of-type(8) ~ .sheet-tab-label:nth-of-type(8),
+.charsheet .sheet-main > .sheet-tab-input:hover:nth-of-type(9) ~ .sheet-tab-label:nth-of-type(9) {
+    color: rgb(255, 255, 255);
+}
+
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(1) ~ .sheet-tab-label:nth-of-type(1),
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(2) ~ .sheet-tab-label:nth-of-type(2),
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(3) ~ .sheet-tab-label:nth-of-type(3),
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(4) ~ .sheet-tab-label:nth-of-type(4),
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(5) ~ .sheet-tab-label:nth-of-type(5),
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(6) ~ .sheet-tab-label:nth-of-type(6),
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(7) ~ .sheet-tab-label:nth-of-type(7),
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(8) ~ .sheet-tab-label:nth-of-type(8),
+.charsheet .sheet-main > .sheet-tab-input:checked:nth-of-type(9) ~ .sheet-tab-label:nth-of-type(9) {
+    color: rgb(255, 255, 255);
+}
+
+.charsheet .sheet-main > .sheet-tab-label span {
+    display: inline-block;
+    color: inherit;
+    font-size: inherit;
+}
+
+.charsheet .sheet-main > .sheet-tab-content {
+    min-height: 600px;
+    background-color: rgb(42, 31, 26);
+    border: 8px solid rgb(20, 20, 20);
+    border-image-source: url("https://raw.githubusercontent.com/aloade/roll20-character-sheets/master/Pathfinder%20Adventurer%27s/image/body_frame.jpg");
+    border-image-slice: 100 130 fill;
+    border-image-width: 60px;
+    border-image-repeat: round;
+    padding: 26px;
+}
+
+/* content */
+.charsheet .sheet-paper {
+    border-image-source: url("https://raw.githubusercontent.com/aloade/roll20-character-sheets/master/Pathfinder%20Adventurer%27s/image/sheets.png");
+    border-image-slice: 110 fill;
+    border-image-width: 105px;
+    border-image-repeat: stretch;
+    padding: 30px;
+    min-height: 450px;
+}
+
+.charsheet .sheet-paper h1 {
+    text-align: center;
+    color: rgb(164, 82, 58);
+    font-size: 150%;
+    line-height: 27px;
+    margin: 0 0 23px;
+    font-weight: bold;
+    text-shadow: 0 0 1px rgba(164, 82, 58, 0.3);
+}
+
+.charsheet .sheet-paper h1:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 9px;
+    background: url("https://raw.githubusercontent.com/aloade/roll20-character-sheets/master/Pathfinder%20Adventurer%27s/image/title.png") center no-repeat;
+    background-size: contain;
+}
+
+.charsheet .sheet-paper input:not([readonly]),
+.charsheet .sheet-paper select:not([readonly]) {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.charsheet .sheet-paper .sheet-section {
+    margin-bottom: 45px;
+}
+
+.charsheet .sheet-paper table {
+    border-collapse: collapse;
+    border: none;
+    width: 100%;
+}
+
+.charsheet .sheet-paper table thead th {
+    background-color: rgba(0, 0, 0, 0.04);
+    text-align: center;
+}
+
+.charsheet .sheet-paper table th span {
+    display: inline-block;
+    line-height: 23px;
+    height: 23px;
+    font-size: 105%;
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.5);
+    font-weight: bold;
+}
+
+.charsheet .sheet-paper table tbody td {
+    padding: 3px;
+    height: 36px;
+}
+
+.charsheet .sheet-paper select {
+    background: url("https://raw.githubusercontent.com/aloade/roll20-character-sheets/master/Pathfinder%20Adventurer%27s/image/select_dropdown_dark.png") no-repeat center right;
+}
+
+.charsheet .sheet-paper input[type="number"]:disabled:not(.sheet-not-disabled),
+.charsheet .sheet-paper input[type="text"][readonly]:not(.sheet-not-disabled) {
+    cursor: default;
+    pointer-events:none;
+    background: transparent repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(0, 0, 0, 0.04) 2px, rgba(0, 0, 0, 0.04) 7px);
+    border: none;
+}
+
+.charsheet .sheet-paper input.sheet-disabled {
+    background: rgba(0, 0, 0, 0.04) !important;
+}
+
+.charsheet .sheet-paper textarea {
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.04);
+    border-radius: 4px;
+    resize: vertical;
+    min-height: calc(16px + 2px + 20px);
+    height: calc(16px + 2px + 4 * 20px);
+    padding: 8px;
+    line-height: 20px;
+}
+
+.charsheet .sheet-paper textarea.sheet-small {
+    height: calc(16px + 2px + 20px);
+}
+
+.charsheet .sheet-paper textarea.sheet-large {
+    height: calc(16px + 2px + 16 * 20px);
+}
+
+.charsheet .sheet-paper span[title]:not(.sheet-alert) {
+    text-decoration: underline dashed;
+    text-decoration-color: inherit;
+    cursor: help;
+}
+
+/* character section */
+.charsheet .sheet-character {
+}
+
+/* minor section */
+.charsheet .sheet-minor {
+  max-width: 180px;
+}
+
+/* --------------------------------------------------- */
+/* rolltemplate */
+/* --------------------------------------------------- */
+.sheet-rolltemplate-roll * {
+    font-family: "Gloria Hallelujah", "Patrick Hand", sans-serif;
+}
+
+.sheet-rolltemplate-roll {
+    padding: 12px;
+    background: url("https://raw.githubusercontent.com/aloade/roll20-character-sheets/master/Pathfinder%20Adventurer%27s/image/sheet_rolled.png") no-repeat;
+    background-size: 100% 100%;
+}
+
+.sheet-rolltemplate-roll p {
+    margin: 0;
+    font-size: 16px;
+    color: rgb(56, 61, 65);
+}
+
+.sheet-rolltemplate-roll p + p {
+    margin-top: 15px;
+}
+
+.sheet-rolltemplate-roll span[title]:not(.inlinerollresult):not(.sheet-info-sign) {
+    text-decoration: underline dashed rgb(50, 50, 50);
+    cursor: help;
+}
+
+.sheet-rolltemplate-roll .inlinerollresult {
+    display: inline-block;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    text-align: center;
+    line-height: 22px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: rgba(50, 50, 50, 0.07);
+    border: 1px solid rgba(50, 50, 50, 0.3);
+}
+
+.sheet-rolltemplate-roll .inlinerollresult.importantroll {
+    background-color: transparent;
+    border: 1px solid rgba(50, 50, 50, 0.3);
+}
+
+.sheet-rolltemplate-roll .inlinerollresult.fullcrit {
+    color: rgb(255, 255, 255);
+    background-color: rgb(40, 167, 69);
+    border: 1px solid rgb(40, 167, 69);
+}
+
+.sheet-rolltemplate-roll .inlinerollresult.fullfail {
+    color: rgb(255, 255, 255);
+    background-color: rgb(200, 35, 51);
+    border: 1px solid rgb(190, 33, 48);
+}
+
+/* flex */
+.sheet-rolltemplate-roll .sheet-flex-row {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+
+.sheet-rolltemplate-roll .sheet-flex-col {
+    position: relative;
+    width: 100%;
+    flex-basis: 0;
+    flex-grow: 1;
+}
+
+.sheet-rolltemplate-roll .sheet-header {
+    margin-bottom: 15px;
+}
+
+.sheet-rolltemplate-roll .sheet-body {
+    text-align: center;
+}
+
+.sheet-rolltemplate-roll .sheet-left {
+    text-align: left;
+}
+
+.sheet-rolltemplate-roll .sheet-right {
+    text-align: right;
+}
+
+.sheet-rolltemplate-roll .sheet-footer {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.sheet-rolltemplate-roll .sheet-footer p {
+    font-style: italic;
+    color: rgb(120, 120, 120);
+    margin: 0;
+}
+
+.sheet-rolltemplate-roll .sheet-critic {
+    background: url("https://raw.githubusercontent.com/aloade/roll20-character-sheets/master/Pathfinder%20Adventurer%27s/image/critical_hit.png") no-repeat center;
+    background-size: contain;
+    width: 100%;
+}
+
+.sheet-rolltemplate-roll .sheet-text-warning {
+    text-shadow: 0 0 1px rgba(0, 0, 0, 0.75);
+    font-weight: bold;
+}
+
+.sheet-rolltemplate-roll .sheet-text-danger {
+    color: rgb(200, 35, 51);
+    font-weight: bold;
+}
+
+.sheet-rolltemplate-roll .sheet-text-success {
+    color: rgb(33, 138, 57);
+    font-weight: bold;
+}
+
+
+/* template - main */
+.sheet-rolltemplate-roll .sheet-roll-main {
+    background: url("https://raw.githubusercontent.com/aloade/roll20-character-sheets/master/Pathfinder%20Adventurer%27s/image/incantation.png") no-repeat center;
+    background-size: contain;
+}
+
+/* template - minor */
+.sheet-rolltemplate-roll .sheet-roll-minor {}
+
+/* template - resistance */
+.sheet-rolltemplate-roll .sheet-roll-resistance {}
+

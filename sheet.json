@@ -1,0 +1,30 @@
+{
+	"authors": "lo(ea)l",
+	"roll20userid": "4268433",
+	"preview": "preview.jpg",
+	"instructions": "code : lo(ea)l,\nPlease read the README.md file.",
+	"html": "heartbeat.html",
+	"css": "heartbeat.css",
+	"compendium": "heart",
+	"useroptions": [
+		{
+			"attribute": "option_whisper",
+			"displayname": "",
+			"displaytranslationkey": "useroptions-whisper",
+			"type": "select",
+			"options": [
+				"Everyone| ",
+				"Game Master|/w gm"
+			],
+				"optiontranslationkeys": [
+				"option-whisper-everyone",
+				"option-whisper-game-master"
+			],
+			"default": " ",
+			"description": "foo",
+			"descriptiontranslationkey": "useroptions-whisper-description"
+		}
+	],
+	"patreon": "",
+	"tipeee": ""
+	}
