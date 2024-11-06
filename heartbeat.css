@@ -321,7 +321,7 @@ html, body {
     text-align: center;
     color: rgb(246, 226, 195);
     background-color: rgb(75, 38, 22);
-    border-image-source: url("https://raw.githubusercontent.com/aloade/heartbeat/image/image/button.jpg");
+    border-image-source: url("https://github.com/aloade/heartbeat/raw/master/image/button.jpg");
     border-image-slice: 49 fill;
     border-image-width: 15px;
     border-image-repeat: round;
@@ -544,7 +544,7 @@ html, body {
     max-height: 90%;
     padding: 30px;
     background-color: rgb(77, 57, 42);
-    border-image-source: url("https://raw.githubusercontent.com/aloade/heartbeat/image/image/modal.jpg");
+    border-image-source: url("https://github.com/aloade/heartbeat/raw/master/image/modal.jpg");
     border-image-slice: 60 fill;
     border-image-width: 30px;
     border-image-repeat: stretch;
@@ -665,7 +665,7 @@ html, body {
 }
 
 .charsheet .sheet-modal select {
-    background: url("https://raw.githubusercontent.com/aloade/heartbeat/image/image/select_dropdown_light.png") no-repeat center right;
+    background: url("https://github.com/aloade/heartbeat/raw/master/image/select_dropdown_light.png") no-repeat center right;
 }
 
 /* --------------------------------------------------- */
@@ -675,7 +675,7 @@ html, body {
     position: relative;
     padding: 20px 30px;
     background-color: rgb(42, 31, 26);
-    border-image-source: url("https://raw.githubusercontent.com/aloade/heartbeat/image/image/header_frame.jpg");
+    border-image-source: url("https://github.com/aloade/heartbeat/raw/master/image/header_frame.jpg");
     border-image-slice: 100 130 fill;
     border-image-width: 60px;
     border-image-repeat: stretch;
@@ -734,7 +734,7 @@ html, body {
     height: 32px;
     background-color: rgb(50, 36, 37);
     border: 2px solid rgb(50, 50, 50);
-    border-image-source: url("https://raw.githubusercontent.com/aloade/heartbeat/image/image/menu_background.jpg");
+    border-image-source: url("https://github.com/aloade/heartbeat/raw/master/image/menu_background.jpg");
     border-image-slice: 38 fill;
     border-image-width: 36px;
     border-image-repeat: round;
@@ -750,7 +750,7 @@ html, body {
     width: 25%;
     max-width: 180px;
     height: 32px;
-    background-image: url("https://raw.githubusercontent.com/aloade/heartbeat/image/image/menu_slider.png");
+    background-image: url("https://github.com/aloade/heartbeat/raw/master/image/menu_slider.png");
     background-repeat:no-repeat;
     background-size: 100% 100%;
     color: rgb(255, 255, 255);
@@ -842,7 +842,7 @@ html, body {
     min-height: 600px;
     background-color: rgb(42, 31, 26);
     border: 8px solid rgb(20, 20, 20);
-    border-image-source: url("https://raw.githubusercontent.com/aloade/heartbeat/image/image/body_frame.jpg");
+    border-image-source: url("https://github.com/aloade/heartbeat/raw/master/image/body_frame.jpg");
     border-image-slice: 100 130 fill;
     border-image-width: 60px;
     border-image-repeat: round;
@@ -851,7 +851,7 @@ html, body {
 
 /* content */
 .charsheet .sheet-paper {
-    border-image-source: url("https://raw.githubusercontent.com/aloade/heartbeat/image/image/sheets.png");
+    border-image-source: url("https://github.com/aloade/heartbeat/raw/master/image/sheets.png");
     border-image-slice: 110 fill;
     border-image-width: 105px;
     border-image-repeat: stretch;
@@ -874,7 +874,7 @@ html, body {
     display: block;
     width: 100%;
     height: 9px;
-    background: url("https://raw.githubusercontent.com/aloade/heartbeat/image/image/title.png") center no-repeat;
+    background: url("https://github.com/aloade/heartbeat/raw/master/image/title.png") center no-repeat;
     background-size: contain;
 }
 
@@ -913,7 +913,7 @@ html, body {
 }
 
 .charsheet .sheet-paper select {
-    background: url("https://raw.githubusercontent.com/aloade/heartbeat/image/image/select_dropdown_dark.png") no-repeat center right;
+    background: url("https://github.com/aloade/heartbeat/raw/master/image/select_dropdown_dark.png") no-repeat center right;
 }
 
 .charsheet .sheet-paper input[type="number"]:disabled:not(.sheet-not-disabled),
@@ -972,7 +972,7 @@ html, body {
 
 .sheet-rolltemplate-roll {
     padding: 12px;
-    background: url("https://raw.githubusercontent.com/aloade/heartbeat/image/image/sheet_rolled.png") no-repeat;
+    background: url("https://github.com/aloade/heartbeat/raw/master/image/sheet_rolled.png") no-repeat;
     background-size: 100% 100%;
 }
 
@@ -1065,7 +1065,7 @@ html, body {
 }
 
 .sheet-rolltemplate-roll .sheet-critic {
-    background: url("https://raw.githubusercontent.com/aloade/heartbeat/image/image/critical_hit.png") no-repeat center;
+    background: url("https://github.com/aloade/heartbeat/raw/master/image/critical_hit.png") no-repeat center;
     background-size: contain;
     width: 100%;
 }
@@ -1088,7 +1088,7 @@ html, body {
 
 /* template - main */
 .sheet-rolltemplate-roll .sheet-roll-main {
-    background: url("https://raw.githubusercontent.com/aloade/heartbeat/image/image/incantation.png") no-repeat center;
+    background: url("https://github.com/aloade/heartbeat/raw/master/image/incantation.png") no-repeat center;
     background-size: contain;
 }
 
